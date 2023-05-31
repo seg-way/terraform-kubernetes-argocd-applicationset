@@ -70,3 +70,10 @@ variable "argo_namespace" {
   default     = "argocd"
   description = "(optional) describe your variable"
 }
+
+
+variable "generators" {
+  # type        = list(object())
+  default     = [{ clusters = {} }]
+  description = "(optional) describe your variable"
+}

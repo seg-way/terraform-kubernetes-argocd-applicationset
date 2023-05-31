@@ -8,36 +8,40 @@ resource "kubernetes_manifest" "app" {
       "name"      = var.name
       "namespace" = var.argo_namespace
     }
-    "template" = {
-      "metadata" = {
-        "name" = "{{name}}-${var.name}"
-      }
-      "spec" = {
-        "destination" = {
-          "name"      = var.destination_name
-          "namespace" = var.namespace
+
+    "spec" = {
+      generators = var.generators
+      "template" = {
+        "metadata" = {
+          "name" = "{{name}}-${var.name}"
         }
-        "project" = var.project
-        "source" = {
-          "chart" = var.chart
-          "helm" = {
-            "releaseName" = var.release
-            "skipCrds"    = var.skipCrds
-            "values"      = var.values
+        "spec" = {
+          "destination" = {
+            "name"      = var.destination_name
+            "namespace" = var.namespace
           }
-          "repoURL"        = var.repository
-          "targetRevision" = var.chart_version
-        }
-        "ignoreDifferences" = var.ignoreDifferences
-        "syncPolicy" = {
-          "automated" = {
-            "prune"    = true
-            "selfHeal" = true
+          "project" = var.project
+          "source" = {
+            "chart" = var.chart
+            "helm" = {
+              "releaseName" = var.release
+              "skipCrds"    = var.skipCrds
+              "values"      = var.values
+            }
+            "repoURL"        = var.repository
+            "targetRevision" = var.chart_version
           }
-          "syncOptions" = [
-            "CreateNamespace=${var.create_namespace}",
-            "ServerSideApply=${var.server_side_apply}"
-          ]
+          "ignoreDifferences" = var.ignoreDifferences
+          "syncPolicy" = {
+            "automated" = {
+              "prune"    = true
+              "selfHeal" = true
+            }
+            "syncOptions" = [
+              "CreateNamespace=${var.create_namespace}",
+              "ServerSideApply=${var.server_side_apply}"
+            ]
+          }
         }
       }
     }
