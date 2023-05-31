@@ -61,7 +61,7 @@ variable "app_in_argo_namespace" {
 
 variable "destination_name" {
   type        = string
-  default     = "{{server}}"
+  default     = "{{name}}"
   description = "(optional) describe your variable"
 }
 
